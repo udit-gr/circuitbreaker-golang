@@ -9,13 +9,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func getUserInfo(w http.ResponseWriter, r *http.Request) {
+func GetUserInfo(w http.ResponseWriter, r *http.Request) {
+
+	var (
+		userID int
+		err    error
+	)
 
 	w.Header().Set("Content-Type", "application/json")
 	pathParams := mux.Vars(r)
 
 	if value, ok := pathParams["userID"]; ok {
-		userID, err := strconv.Atoi(value)
+		userID, err = strconv.Atoi(value)
 		if err != nil {
 			log.Printf("[ERR][getUserInfo] Error while convreting user-id : %s to int, Err : %v", value, err)
 			w.WriteHeader(http.StatusInternalServerError)
