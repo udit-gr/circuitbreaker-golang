@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// GetUserInfo return info for the user-id in request payload
 func GetUserInfo(w http.ResponseWriter, r *http.Request) {
 
 	var (
@@ -22,14 +23,13 @@ func GetUserInfo(w http.ResponseWriter, r *http.Request) {
 	if value, ok := pathParams["userID"]; ok {
 		userID, err = strconv.Atoi(value)
 		if err != nil {
-			log.Printf("[ERR][getUserInfo] Error while convreting user-id : %s to int, Err : %v", value, err)
+			log.Printf("[ERR][getUserInfo] Error while converting user-id : %s to int, Err : %v", value, err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(messsageInvalidUserID))
 			return
 		}
 	}
 
-	w.Write([]byte(fmt.Sprintf(`{"message": %d"}`, userID)))
-	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf(`{"message": "%d"}`, userID)))
 	return
 }

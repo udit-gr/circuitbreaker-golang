@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -15,7 +16,7 @@ func main() {
 	api := r.PathPrefix("/api/v1").Subrouter()
 	api.HandleFunc("/{userID}", v1.GetUserInfo).Methods(http.MethodGet)
 
-	log.Printf("[INFO]Started Service on Port : %s", v1.Port)
-	log.Fatal(http.ListenAndServe(v1.Port, r))
+	log.Printf("[INFO]Service listening on Port : %s", v1.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", v1.Port), r))
 
 }
